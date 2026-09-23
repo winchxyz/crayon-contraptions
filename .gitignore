@@ -1,0 +1,12 @@
+# captures from the dev tools
+shots/
+# build output for the Claude artifact (docs/ is the GitHub Pages build and is kept)
+dist/
+# generator cache and logs
+tools/cache/
+*.log
+# local editor/agent config
+.claude/
+node_modules/
+.DS_Store
+Thumbs.db
