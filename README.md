@@ -1,12 +1,30 @@
-# Crayon Contraptions
+<h1 align="center">Crayon Contraptions</h1>
+
+<p align="center"><em>Draw the missing part. Press GO. Watch every piece set off the next.</em></p>
+
+<p align="center">
+  <a href="https://winchxyz.github.io/crayon-contraptions/"><img alt="Play in the browser" src="https://img.shields.io/badge/%E2%96%B6%20play-in%20the%20browser-2e8a3e?style=for-the-badge&labelColor=3a2616"></a>
+  <a href="https://github.com/winchxyz/crayon-contraptions/releases/latest"><img alt="Demo video" src="https://img.shields.io/badge/demo-59s%20video-e23b34?style=for-the-badge&labelColor=3a2616"></a>
+</p>
+
+<p align="center">
+  <img alt="100 levels" src="https://img.shields.io/badge/levels-100-f6c421">
+  <img alt="7 crayons" src="https://img.shields.io/badge/crayons-7%20kinds%20of%20physics-2e6bd6">
+  <img alt="10 bosses" src="https://img.shields.io/badge/bosses-10-e23b34">
+  <img alt="planck.js" src="https://img.shields.io/badge/physics-planck.js-7a4fc0">
+  <img alt="No build step" src="https://img.shields.io/badge/vanilla%20JS-no%20build%20step-f7df1e?logo=javascript&logoColor=black">
+  <img alt="Audio" src="https://img.shields.io/badge/audio-synthesised%20in%20WebAudio-8a63d2">
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
+</p>
+
+<p align="center">
+  <img src="media/demo.gif" alt="Crayon Contraptions in motion: a ramp is drawn in blue crayon, a ball rolls into a basket, a domino run fires a cannon that feeds a cat, a boss takes hits" width="720">
+</p>
 
 A Rube Goldberg machine puzzle drawn in crayon: 100 levels in ten worlds,
 seven crayons with their own physics, live levels you draw while they run,
-and a boss monster at the end of every world.
-
-**Play it: https://winchxyz.github.io/crayon-contraptions/**
-
-![Feed the Cat: a glove, a domino run, a cannon and a sleeping cat](media/feed-the-cat.jpg)
+and a boss monster at the end of every world. The full 59-second demo video is
+attached to the [latest release](https://github.com/winchxyz/crayon-contraptions/releases/latest).
 
 | | |
 | --- | --- |
@@ -42,6 +60,12 @@ node build.js                # docs/index.html (GitHub Pages) + dist/ (single-fi
 
 GitHub Pages serves `docs/` from the `main` branch; run `node build.js` and
 commit `docs/` to update the live site.
+
+The demo video is recorded by the game itself: load `dev/demo.js` on the dev
+server page and call `DEMO.run()`. It freezes the game loop and drives it on a
+virtual 30 fps clock, so every frame is exact however slowly the browser
+renders. `node tools/make-demo.js` then encodes `media/demo.mp4` and
+`media/demo.gif` with ffmpeg.
 
 ## How the 100 levels are made
 

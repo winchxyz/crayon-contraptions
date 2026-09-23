@@ -62,6 +62,7 @@
 
   /* ---------- sizing & the cached background ---------- */
   function resize() {
+    if (st.frozen) return;
     const wrap = $('.sheet-wrap');
     const avail = wrap.clientWidth;
     let w = avail;
@@ -635,6 +636,7 @@
 
   let hudT = 0;
   function frame(now) {
+    if (st.frozen) { requestAnimationFrame(frame); return; }  // a recorder is driving the clock
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     const sim = st.sim;
     if (st.mode === 'count') countdownTick(now);
@@ -730,6 +732,14 @@
     advance(sec) { const n = Math.round(sec / DT); for (let i = 0; i < n; i++) { st.sim.step(); if (i % 12 === 0) drain(); } drain(); syncHud(); render(performance.now()); },
     size(W) { if (!W) { cv.width = 1; resize(); return; } cv.width = W; cv.height = Math.round(W * 9 / 16); k = W / 1600; cr.res = k; cr.pats.clear(); buildStatic(); },
     bench(n) { const t0 = performance.now(); for (let i = 0; i < (n || 30); i++) render(t0 + i * 16); return (performance.now() - t0) / (n || 30); },
-    shot(name) { render(performance.now()); return fetch('/__shot', { method: 'POST', body: JSON.stringify({ name, data: cv.toDataURL('image/jpeg', 0.85) }) }).then(r => r.json()); }
+    shot(name) { render(performance.now()); return fetch('/__shot', { method: 'POST', body: JSON.stringify({ name, data: cv.toDataURL('image/jpeg', 0.85) }) }).then(r => r.json()); },
+    /* recording hooks (dev/demo.js): freeze the loop, step, draw, capture */
+    freeze(on) { st.frozen = !!on; },
+    tick(sec) { const n = Math.round(sec / DT); for (let i = 0; i < n; i++) if (st.sim.running) st.sim.step(); drain(); },
+    render(now) { render(now); },
+    gfx() { return { ctx, cr, k, cv }; },
+    setDrawing(kind, raw) { st.drawing = raw ? { kind, raw, len: 0, lastT: 0 } : null; },
+    drawStroke(kind, raw) { st.drawing = { kind, raw, len: 0, lastT: 0 }; finishStroke(); },
+    capture(name, q) { return fetch('/__shot', { method: 'POST', body: JSON.stringify({ name, data: cv.toDataURL('image/jpeg', q || 0.9) }) }).then(r => r.json()); }
   };
 })();

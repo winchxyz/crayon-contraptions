@@ -10,3 +10,5 @@ tools/cache/
 node_modules/
 .DS_Store
 Thumbs.db
+# full demo video lives on the GitHub release, not in git
+media/demo.mp4
